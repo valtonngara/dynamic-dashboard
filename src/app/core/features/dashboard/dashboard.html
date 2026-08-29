@@ -1,0 +1,68 @@
+<main class="dashboard">
+
+    <header class="dashboard-header">
+        <div class="logo">A</div>
+
+        <button class="save-button">
+            Save Layout
+        </button>
+    </header>
+
+    <section class="dashboard-toolbar">
+        <select>
+            <option>Dataset</option>
+        </select>
+
+        <select>
+            <option>Last 90 days</option>
+        </select>
+    </section>
+
+    <gridster [options]="gridOptions">
+
+        @for (
+        widget of store.visibleWidgets();
+        track widget.id
+        ) {
+
+        <gridster-item [item]="widget">
+
+            <div class="widget">
+
+                @switch (widget.type) {
+
+                @case ('stat') {
+                <div class="stat-widget">
+                    <span class="stat-label">
+                        {{ widget.title }}
+                    </span>
+
+                    <strong class="stat-value">
+                        $56,780
+                    </strong>
+                </div>
+                }
+
+                @case ('chart') {
+                <div class="chart-placeholder">
+                    Chart: {{ widget.chartType }}
+                </div>
+                }
+
+                @case ('table') {
+                <div class="table-placeholder">
+                    Transactions table
+                </div>
+                }
+
+                }
+
+            </div>
+
+        </gridster-item>
+
+        }
+
+    </gridster>
+
+</main>
