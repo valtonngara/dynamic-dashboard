@@ -1,0 +1,25 @@
+<div class="stat">
+    <span class="stat-title">
+        {{ widget().title }}
+    </span>
+
+    @if (widget().dataSource === 'sales') {
+
+    <strong class="stat-value">
+        {{ value() | currency:'USD':'symbol':'1.0-0' }}
+    </strong>
+
+    } @else if (widget().dataSource === 'engagement') {
+
+    <strong class="stat-value">
+        {{ value() | number:'1.1-1' }}%
+    </strong>
+
+    } @else {
+
+    <strong class="stat-value">
+        {{ value() | number }}
+    </strong>
+
+    }
+</div>

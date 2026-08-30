@@ -1,0 +1,38 @@
+<div class="chart-widget">
+
+    <div class="chart-header">
+
+        <h3>
+            {{ widget().title }}
+        </h3>
+
+        <mat-form-field appearance="outline">
+
+            <mat-select [value]="chartType()" (selectionChange)="changeChartType($event.value)">
+
+                <mat-option value="line">
+                    Line
+                </mat-option>
+
+                <mat-option value="bar">
+                    Bar
+                </mat-option>
+
+                <mat-option value="pie">
+                    Pie
+                </mat-option>
+
+            </mat-select>
+
+        </mat-form-field>
+
+    </div>
+
+    <div class="chart-container">
+
+        <canvas baseChart [data]="chartData()" [type]="chartType()" [options]="chartOptions">
+        </canvas>
+
+    </div>
+
+</div>

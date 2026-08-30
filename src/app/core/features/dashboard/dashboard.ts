@@ -13,6 +13,15 @@ import {
   GridsterItemConfig
 } from 'angular-gridster2';
 
+import { StatWidget }
+  from './components/stat-widget/stat-widget';
+
+import { ChartWidget }
+  from './components/chart-widget/chart-widget';
+
+import { TableWidget }
+  from './components/table-widget/table-widget';
+
 import { DashboardStore } from '../../services/dashboard-store.service';
 import { DashboardWidget } from '../../models/dashboard.model';
 
@@ -20,7 +29,10 @@ import { DashboardWidget } from '../../models/dashboard.model';
   selector: 'app-dashboard',
   imports: [
     Gridster,
-    GridsterItem
+    GridsterItem,
+    StatWidget,
+  ChartWidget,
+  TableWidget
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
@@ -31,7 +43,7 @@ export class Dashboard {
   readonly store = inject(DashboardStore);
 
 readonly gridOptions: GridsterConfig = {
-  gridType: 'fit',
+  gridType: 'scrollVertical',
 
   compactType: CompactType.None,
 
@@ -39,13 +51,15 @@ readonly gridOptions: GridsterConfig = {
   maxCols: 12,
 
   minRows: 6,
-  maxRows: 50,
+  maxRows: 100,
 
-  margin: 10,
-  outerMargin: true,
+  margin: 12,
+  outerMargin: false,
 
   pushItems: true,
   swap: true,
+
+  mobileBreakpoint: 900,
 
   draggable: {
     enabled: true
@@ -71,4 +85,8 @@ readonly gridOptions: GridsterConfig = {
 
     this.store.updateWidget(widget);
   }
+
+  saveLayout(): void {
+  this.store.saveLayout();
+}
 }

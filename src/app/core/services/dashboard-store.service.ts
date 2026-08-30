@@ -28,6 +28,36 @@ private readonly _widgets = signal<DashboardWidget[]>([
   },
 
   {
+    id: 'sales-chart-main',
+    title: 'Sales Overview',
+    type: 'chart',
+    dataSource: 'sales',
+    chartType: 'line',
+
+    x: 4,
+    y: 0,
+    cols: 4,
+    rows: 4,
+
+    visible: true
+  },
+
+  {
+    id: 'users-chart',
+    title: 'Users',
+    type: 'chart',
+    dataSource: 'users',
+    chartType: 'bar',
+
+    x: 8,
+    y: 0,
+    cols: 4,
+    rows: 4,
+
+    visible: true
+  },
+
+  {
     id: 'sales-chart-left',
     title: 'Sales Trend',
     type: 'chart',
@@ -43,44 +73,14 @@ private readonly _widgets = signal<DashboardWidget[]>([
   },
 
   {
-    id: 'sales-chart-main',
-    title: 'Sales Overview',
-    type: 'chart',
-    dataSource: 'sales',
-    chartType: 'line',
-
-    x: 4,
-    y: 1,
-    cols: 4,
-    rows: 2,
-
-    visible: true
-  },
-
-  {
-    id: 'users-chart',
-    title: 'Users',
-    type: 'chart',
-    dataSource: 'users',
-    chartType: 'bar',
-
-    x: 8,
-    y: 1,
-    cols: 4,
-    rows: 2,
-
-    visible: true
-  },
-
-  {
     id: 'sales-table',
     title: 'Transactions',
     type: 'table',
 
     x: 4,
-    y: 3,
+    y: 4,
     cols: 8,
-    rows: 3,
+    rows: 4,
 
     visible: true
   }
@@ -136,4 +136,30 @@ private readonly _widgets = signal<DashboardWidget[]>([
       )
     );
   }
+
+  private readonly storageKey = 'dashboard-layout';
+
+saveLayout(): void {
+  localStorage.setItem(
+    this.storageKey,
+    JSON.stringify(this._widgets())
+  );
+}
+
+loadLayout(): void {
+  const saved = localStorage.getItem(this.storageKey);
+
+  if (!saved) {
+    return;
+  }
+
+  try {
+    const widgets =
+      JSON.parse(saved) as DashboardWidget[];
+
+    this._widgets.set(widgets);
+  } catch {
+    console.error('Could not restore dashboard layout.');
+  }
+}
 }
